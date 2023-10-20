@@ -1,4 +1,3 @@
-import { deleteQuestion } from "../controllers/questionController";
 import questionRepository from "../repositories/questionsRepository";
 
 class QuestionService {
