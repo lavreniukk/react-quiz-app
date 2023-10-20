@@ -5,12 +5,12 @@ const router = Router();
 
 router.get('/', getQuestions, responseMiddleware);
 
-router.post('/', addQuestion);
+router.post('/', addQuestion, responseMiddleware);
 
-router.put('/:id', updateQuestion);
+router.put('/:id', updateQuestion, responseMiddleware);
 
-router.delete('/:id', deleteQuestion);
+router.delete('/:id', deleteQuestion, responseMiddleware);
 
-router.get('/:id', getQuestion);
+router.get('/:id', getQuestion, responseMiddleware);
 
 export default router;

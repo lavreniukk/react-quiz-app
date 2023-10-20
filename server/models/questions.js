@@ -5,7 +5,7 @@ const questionSchema = mongoose.Schema({
             type: String,
             required: [true, 'A question must contain its text']
         },
-        correstAnswer: {
+        correctAnswer: {
             type: Number,
             required: [true, 'Please choose a correct answer to your question']
         },
