@@ -1,5 +1,8 @@
-const getQuestions = (req, res) => {
-    res.status(200).json({ message: 'Get questions' })
+import Question from '../models/questions.js';
+
+const getQuestions = async (req, res) => {
+    const questions = await Question.find();
+    res.status(200).json(questions);
 }
 
 const getQuestion = (req, res) => {
