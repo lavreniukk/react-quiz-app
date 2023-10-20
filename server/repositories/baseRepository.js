@@ -30,7 +30,7 @@ class BaseRepository {
 
     async update(newData, id) {
         try {
-            return await this.model.findByIdAndUpdate(id, newData, )
+            return await this.model.findByIdAndUpdate(id, newData)
         } catch (error) {
             throw error
         }
