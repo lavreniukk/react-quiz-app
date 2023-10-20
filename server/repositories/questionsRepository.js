@@ -1,5 +1,5 @@
-import BaseRepository from "./baseRepository";
-import Question from "../models/questions";
+import BaseRepository from "./baseRepository.js";
+import Question from "../models/questions.js";
 
 class QuestionRepository extends BaseRepository {
     constructor() {

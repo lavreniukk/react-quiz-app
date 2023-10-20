@@ -1,4 +1,4 @@
-import questionRepository from "../repositories/questionsRepository";
+import questionRepository from "../repositories/questionsRepository.js";
 
 class QuestionService {
     async getAllQuestions() {
@@ -37,3 +37,7 @@ class QuestionService {
         }
     }
 }
+
+const questionService = new QuestionService();
+
+export default questionService;
