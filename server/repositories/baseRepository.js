@@ -21,7 +21,7 @@ class BaseRepository {
 
     async create(data) {
         try {
-            const newDocument = new this.model(data);
+            const newDocument = new this.collection(data);
             return await newDocument.save();
         } catch (error) {
             throw error;
@@ -30,7 +30,7 @@ class BaseRepository {
 
     async update(newData, id) {
         try {
-            return await this.model.findByIdAndUpdate(id, newData)
+            return await this.collection.findByIdAndUpdate(id, newData)
         } catch (error) {
             throw error
         }
@@ -38,7 +38,7 @@ class BaseRepository {
 
     async delete(id) {
         try {
-            return await this.model.findByIdAndRemove(id).exec()
+            return await this.collection.findByIdAndRemove(id).exec()
         } catch (error) {
             throw error
         }
