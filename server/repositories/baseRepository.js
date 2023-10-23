@@ -4,44 +4,24 @@ class BaseRepository {
     }
 
     async getAll() {
-        try {
-            return await this.collection.find();
-        } catch (error) {
-            throw error;
-        }
+        return await this.collection.find();
     }
 
     async getById(id) {
-        try {
-            return await this.collection.findById(id).exec();
-        } catch (error) {
-            throw error;
-        }
+        return await this.collection.findById(id).exec();
     }
 
     async create(data) {
-        try {
-            const newDocument = new this.collection(data);
-            return await newDocument.save();
-        } catch (error) {
-            throw error;
-        }
+        const newDocument = new this.collection(data);
+        return await newDocument.save();
     }
 
     async update(newData, id) {
-        try {
-            return await this.collection.findByIdAndUpdate(id, newData, {new: true});
-        } catch (error) {
-            throw error
-        }
+        return await this.collection.findByIdAndUpdate(id, newData, {new: true});
     }
 
     async delete(id) {
-        try {
-            return await this.collection.findByIdAndRemove(id).exec()
-        } catch (error) {
-            throw error
-        }
+        return await this.collection.findByIdAndRemove(id).exec();
     }
 }
 
