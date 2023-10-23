@@ -25,12 +25,8 @@ class UserService {
         return user;
     }
 
-    async login() {
-
-    }
-
-    async register() {
-
+    async register(userData) {
+        return await userRepository.create(userData);
     }
 }
 
