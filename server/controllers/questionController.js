@@ -39,7 +39,17 @@ const addQuestion = async (req, res, next) => {
 }
 
 const updateQuestion = async (req, res, next) => {
-    res.status(200).json({ message: `Update question with id ${req.params.id}`})
+    try {
+        const updatedQuestion = await questionService.updateQuestion(req.body, req.params.id);
+        res.status(200);
+        res.message = 'Question updated successfully';
+        res.data = updatedQuestion;
+    } catch(error) {
+        res.status(400);
+        res.message = error.message;
+    } finally {
+        next();
+    }
 }
 
 const deleteQuestion = async (req, res, next) => {
