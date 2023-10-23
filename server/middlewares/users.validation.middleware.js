@@ -16,6 +16,10 @@ const registerUserValid = (req, res, next) => {
 
 const loginUserValid = (req, res, next) => {
     try {
+        const {email, password} = req.body;
+        if (!email || !password) {
+            throw new Error('Email and password are required');
+        }
         validateUser(req.body);
         next();
     } catch(error) {
