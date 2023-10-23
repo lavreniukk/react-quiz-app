@@ -21,7 +21,22 @@ const getQuestions = async (req, res, next) => {
 }
 
 const getQuestion = async (req, res, next) => {
-    res.status(200).json({ message: `Get question with id ${req.params.id}`})
+    try {
+        const question = await questionService.getQuestionById(req.params.id);
+        
+        if (!question) {
+            throw new Error("Question wasn't found");
+        }
+
+        res.status(200);
+        res.message = 'Question found successfully';
+        res.data = question;
+    } catch (error) {
+        res.status(404);
+        res.message = error.message;
+    } finally {
+        next();
+    }
 }
 
 const addQuestion = async (req, res, next) => {
