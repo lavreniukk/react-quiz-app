@@ -1,4 +1,4 @@
-import userRepository from "../repositories/userRepository";
+import userRepository from "../repositories/userRepository.js";
 
 class UserService {
     async getAllUsers() {
@@ -17,8 +17,12 @@ class UserService {
         return user;
     }
 
-    async getByEmail(email) {
-        
+    async getUserByEmail(email) {
+        const user = await userRepository.getOne({email: email});
+        if (!user) {
+            return null;
+        }
+        return user;
     }
 
     async login() {
