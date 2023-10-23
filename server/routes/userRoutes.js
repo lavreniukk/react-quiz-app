@@ -7,6 +7,6 @@ const router = Router();
 router.get('/', getAllUsers, responseMiddleware);
 router.get('/:id', getUserById, responseMiddleware);
 router.post('/', login, responseMiddleware);
-router.post('/', register, responseMiddleware);
+router.post('/register', register, responseMiddleware);
 
 export default router;
