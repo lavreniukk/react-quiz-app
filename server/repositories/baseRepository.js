@@ -11,6 +11,10 @@ class BaseRepository {
         return await this.collection.findById(id).exec();
     }
 
+    async getOne(query) {
+        return await this.collection.findOne(query);
+    }
+
     async create(data) {
         const newDocument = new this.collection(data);
         return await newDocument.save();
