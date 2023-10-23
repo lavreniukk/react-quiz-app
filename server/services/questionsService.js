@@ -2,38 +2,26 @@ import questionRepository from "../repositories/questionsRepository";
 
 class QuestionService {
     async getAllQuestions() {
-        try {
-            return await questionRepository.getAll();
-        } catch (error) {
-            throw error
+        const questions = await questionRepository.getAll();
+        if (!questions) {
+            return null;
         }
+        return questions;
     }
     async getQuestionById(questionId) {
-        try {
-            return await questionRepository.getById(questionId);
-        } catch (error) {
-            throw error
+        const question = await questionRepository.getById(questionId);
+        if (!question) {
+            return null;
         }
+        return question;
     }
     async addNewQuestion(questionData) {
-        try {
-            return await questionRepository.create(questionData);
-        } catch (error) {
-            throw error
-        }
+        return await questionRepository.create(questionData);
     }
     async updateQuestion(newQuestionData, questionId) {
-        try {
-            return await questionRepository.update(newQuestionData, questionId);
-        } catch (error) {
-            throw error
-        } 
+        return await questionRepository.update(newQuestionData, questionId);
     }
     async deleteQuestion(questionId) {
-        try {
-            return await questionRepository.delete(questionId);
-        } catch (error) {
-            throw error
-        }
+        return await questionRepository.delete(questionId);
     }
 }
