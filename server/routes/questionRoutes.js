@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', getQuestions, responseMiddleware);
 
-router.post('/', addNewQuestionValid,addQuestion, responseMiddleware);
+router.post('/', addNewQuestionValid, addQuestion, responseMiddleware);
 
 router.put('/:id', updateQuestionValid, updateQuestion, responseMiddleware);
 
