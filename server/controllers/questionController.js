@@ -1,5 +1,4 @@
 import questionService from '../services/questionsService.js';
-import Question from '../models/questions.js';
 
 const getQuestions = async (req, res, next) => {
     try {
