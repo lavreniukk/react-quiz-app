@@ -1,5 +1,6 @@
 const addNewQuestionValid = (req, res, next) => {
     try {
+        const {text, answers, correctAnswer} = req.body;
         if (!text || !answers || !correctAnswer) { 
             throw new Error('All of the fields are required!'); 
         }

@@ -1,5 +1,4 @@
 import questionService from '../services/questionsService.js';
-import Question from '../models/questions.js';
 
 const getQuestions = async (req, res, next) => {
     try {
@@ -55,6 +54,11 @@ const addQuestion = async (req, res, next) => {
 
 const updateQuestion = async (req, res, next) => {
     try {
+        const questionToUpdate = await questionService.getQuestionById(req.params.id);
+        if (!questionToUpdate) {
+            throw new Error("Question wasn't found");
+        }
+
         const updatedQuestion = await questionService.updateQuestion(req.body, req.params.id);
         res.status(200);
         res.message = 'Question updated successfully';
@@ -68,7 +72,22 @@ const updateQuestion = async (req, res, next) => {
 }
 
 const deleteQuestion = async (req, res, next) => {
-    res.status(200).json({ message: `Delete question with id ${req.params.id}`})
+    try {
+        const questionToDelete = await questionService.getQuestionById(req.params.id);
+        if (!questionToDelete) {
+            throw new Error("Question wasn't found");
+        }
+
+        const deletedQuestion = await questionService.deleteQuestion(req.params.id);
+        res.status(200);
+        res.message = 'Question was deleted';
+        res.data = deletedQuestion;
+    } catch (error) {
+        res.status(400);
+        res.message = error.message;
+    } finally {
+        next();
+    }
 }
 
 export {
