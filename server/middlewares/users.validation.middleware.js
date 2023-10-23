@@ -14,6 +14,18 @@ const registerUserValid = (req, res, next) => {
     }
 }
 
+const loginUserValid = (req, res, next) => {
+    try {
+        validateUser(req.body);
+        next();
+    } catch(error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
 const validatePassword = (password) => {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     return passwordPattern.test(password);
@@ -47,4 +59,4 @@ const validateUser = (user) => {
     }
 }
 
-export { registerUserValid }
+export { registerUserValid, loginUserValid }
