@@ -17,6 +17,15 @@ class UserService {
         return user;
     }
 
+    async getUserWithoutPassword(id) {
+        const user = await userRepository.getById(id);
+        if (!user) {
+            return null;
+        }
+        user.password = undefined;
+        return user;
+    }
+
     async getUserByEmail(email) {
         const user = await userRepository.getOne({email: email});
         if (!user) {
