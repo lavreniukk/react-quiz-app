@@ -1,6 +1,6 @@
 import userService from "../services/userService.js";
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { generateToken } from "../utils/jsonToken.js";
 
 const getAllUsers = async (req, res, next) => {
     res.status(200).json({error: false, message: 'Get all users'});
@@ -53,9 +53,18 @@ const register = async (req, res, next) => {
 
         const registeredUser = await userService.register(req.body);
 
+        if (!registeredUser) {
+            throw new Error('Invalid user data');
+        }
+        
         res.status(200);
         res.message = 'User was successfully created';
-        res.data = registeredUser;
+        res.data = {
+            _id: registeredUser._id,
+            username: registeredUser.username,
+            email: registeredUser.email,
+            token: generateToken(registeredUser._id)
+        };
     } catch (error) {
         res.status(400);
         res.message = error.message;
