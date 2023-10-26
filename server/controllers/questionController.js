@@ -40,7 +40,8 @@ const getQuestion = async (req, res, next) => {
 
 const addQuestion = async (req, res, next) => {
     try {
-        const addedQuestion = await questionService.addNewQuestion(req.body);
+        const addedQuestion = await questionService.addNewQuestion({...req.body, user: req.user.id});
+
         res.status(200);
         res.message = 'Question added successfully';
         res.data = addedQuestion;
@@ -54,9 +55,13 @@ const addQuestion = async (req, res, next) => {
 
 const updateQuestion = async (req, res, next) => {
     try {
-        const questionToUpdate = await questionService.getQuestionById(req.params.id);
+        const questionToUpdate = await questionService.getQuestionByIdWithUser(req.params.id);
         if (!questionToUpdate) {
             throw new Error("Question wasn't found");
+        }
+
+        if (req.user._id.toString() !== questionToUpdate.user.toString()) {
+            throw new Error("Cannot update someone else's question");
         }
 
         const updatedQuestion = await questionService.updateQuestion(req.body, req.params.id);
@@ -73,9 +78,13 @@ const updateQuestion = async (req, res, next) => {
 
 const deleteQuestion = async (req, res, next) => {
     try {
-        const questionToDelete = await questionService.getQuestionById(req.params.id);
+        const questionToDelete = await questionService.getQuestionByIdWithUser(req.params.id);
         if (!questionToDelete) {
             throw new Error("Question wasn't found");
+        }
+
+        if (req.user._id.toString() !== questionToDelete.user.toString()) {
+            throw new Error("Cannot delete someone else's question")
         }
 
         const deletedQuestion = await questionService.deleteQuestion(req.params.id);

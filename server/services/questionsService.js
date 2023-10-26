@@ -13,6 +13,14 @@ class QuestionService {
         if (!question) {
             return null;
         }
+        question.user = undefined;
+        return question;
+    }
+    async getQuestionByIdWithUser(questionId) {
+        const question = await questionRepository.getById(questionId);
+        if (!question) {
+            return null;
+        }
         return question;
     }
     async addNewQuestion(questionData) {

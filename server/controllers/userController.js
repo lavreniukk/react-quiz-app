@@ -2,16 +2,46 @@ import userService from "../services/userService.js";
 import bcrypt from 'bcryptjs';
 import { generateToken } from "../utils/jsonToken.js";
 
-const getAllUsers = async (req, res, next) => {
-    res.status(200).json({error: false, message: 'Get all users'});
-}
-
 const getUserById = async (req, res, next) => {
-    res.status(200).json({error: false, message: 'Get users with id'});
+    try {
+        const user = await userService.getUserById(req.params.id);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        res.status(200);
+        res.message = 'User found successfully';
+        res.data = {
+            username: user.username,
+        }
+    } catch (error) {
+        res.status(404);
+        res.message = error.message;
+    } finally {
+        next();
+    }
 }
 
-const getUserByEmail = async (req, res, next) => {
-    res.status(200).json({error: false, message: 'Get users with id'});
+const getCurrentUser = async (req, res, next) => {
+    try {
+        const user = req.user;
+        if (!user) {
+            throw new Error("User wasn't found");
+        }
+
+        res.status(200);
+        res.message = 'User found successfully';
+        res.data = {
+            _id: user._id,
+            username: user.username,
+            email: user.email
+        };
+    } catch (error) {
+        res.status(404);
+        res.message = error.message;
+    } finally {
+        next();
+    }
 }
 
 const login = async (req, res, next) => {
@@ -29,7 +59,12 @@ const login = async (req, res, next) => {
 
         res.status(200);
         res.message = 'Login successfull';
-        res.data = user;
+        res.data = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            token: generateToken(user._id)
+        };
     } catch (error) {
         res.status(404);
         res.message = error.message;
@@ -74,9 +109,8 @@ const register = async (req, res, next) => {
 }
 
 export {
-    getAllUsers,
     getUserById,
-    getUserByEmail,
+    getCurrentUser,
     login,
     register
 }
