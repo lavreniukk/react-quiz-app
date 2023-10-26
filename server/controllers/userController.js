@@ -10,10 +10,6 @@ const getUserById = async (req, res, next) => {
     res.status(200).json({error: false, message: 'Get users with id'});
 }
 
-const getUserByEmail = async (req, res, next) => {
-    res.status(200).json({error: false, message: 'Get users with id'});
-}
-
 const getCurrentUser = async (req, res, next) => {
     try {
         const user = req.user;
@@ -103,7 +99,6 @@ const register = async (req, res, next) => {
 export {
     getAllUsers,
     getUserById,
-    getUserByEmail,
     getCurrentUser,
     login,
     register

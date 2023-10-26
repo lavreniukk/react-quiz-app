@@ -9,14 +9,18 @@ const protectMiddleware = async (req, res, next) => {
             throw new Error('Token is missing');
         }
 
-        const decoded = decodeToken(token.split(' ')[1]);
+        const decoded = decodeToken(token);
         req.user = await userService.getUserWithoutPassword(decoded.id);
+
+        if (!req.user) {
+            throw new Error("User not found");
+        }
         
         next();
     } catch (error) {
         res.status(401).json({
             error: true,
-            message: 'Not authorized'
+            message: error.message
         })
     }
 }
