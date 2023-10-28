@@ -6,8 +6,12 @@ class QuizRepository extends BaseRepository {
         super(Quiz);
     }
 
-    async getQuizzesByUserId(userId) {
-        return await this.collection.find({ user: userId });
+    async getQuizzesByCreatorId(userId) {
+        return await this.collection.find({ createdBy: userId });
+    }
+
+    async getQuizzesByParticipantId(participantId) {
+        return await this.collection.find({ 'participants.user': participantId }, { 'participants.$': 1 });
     }
 }
 

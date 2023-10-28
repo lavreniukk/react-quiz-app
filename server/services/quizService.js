@@ -10,8 +10,16 @@ class QuizService {
         return quiz;
     }
 
-    async getQuizzesByUserId(userId) {
+    async getQuizzesByCreatorId(userId) {
         const quizzes = await quizRepository.getQuizzesByUserId(userId);
+        if (!quizzes) {
+            return null;
+        }
+        return quizzes;
+    }
+
+    async getQuizzesByParticipantId(participantId) {
+        const quizzes = await quizRepository.getQuizzesByParticipantId(participantId);
         if (!quizzes) {
             return null;
         }
@@ -24,30 +32,35 @@ class QuizService {
         const newQuiz = {
             title: 'Random quiz',
             quizQuestions: randomQuestionsIds,
-            user: userId
+            createdBy: userId
         }
 
         return await quizRepository.create(newQuiz);
     }
 
-    async checkUsersAnswers(quizId, usersAnswers, userTime) {
+    async checkUsersAnswers(quizId, userQuizInfo) {
+        const { userId, userAnswers, userTime } = userQuizInfo;
         const usersQuiz = await quizRepository.getById(quizId);
 
         //maybe try catch block
-        if (!quiz) {
+        if (!usersQuiz) {
             throw new Error("Quiz wasn't found");
         }
 
         const questionsFromQuiz = await questionRepository.getQuestionsByIds(usersQuiz.quizQuestions);
-        const userScore = this.calculateUserScore(questionsFromQuiz, usersAnswers);
+        const userScore = this.calculateUserScore(questionsFromQuiz, userAnswers);
 
-        const completedQuiz = {
-            ...quiz,
-            userTime,
+        const participant = {
+            userId,
             userScore,
+            userTime,
         }
 
-        return await quizRepository.update(completedQuiz, quizId);
+        usersQuiz.participants.push(participant);
+        await usersQuiz.save();
+
+        usersQuiz.participants = usersQuiz.participants.filter(participant => participant.user === userId);
+        return usersQuiz;
     }
 
     calculateUserScore(questions, userAnswers) {
@@ -62,3 +75,6 @@ class QuizService {
         return score;
     }
 }
+
+const quizService = new QuizService();
+export default quizService;
