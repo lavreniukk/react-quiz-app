@@ -11,7 +11,7 @@ class QuizService {
     }
 
     async getQuizzesByCreatorId(userId) {
-        const quizzes = await quizRepository.getQuizzesByUserId(userId);
+        const quizzes = await quizRepository.getQuizzesByCreatorId(userId);
         if (!quizzes) {
             return null;
         }
