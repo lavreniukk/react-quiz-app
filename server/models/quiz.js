@@ -18,14 +18,22 @@ const quizSchema = mongoose.Schema({
             required: true,
             ref: 'User'
         },
-        userTime: {
-            type: Number,
-            default: undefined
-        },
-        userScore: {
-            type: Number,
-            default: undefined
-        }
+        participants: [
+            {
+                user: {
+                    type: mongoose.Schema.ObjectId,
+                    required: true,
+                    ref: 'User'
+                },
+                userScore: {
+                    type: Number,
+                    required: true
+                },
+                userTime: {
+                    type: Number,
+                }
+            }
+        ]
     },
     {
         timestamps: true,
