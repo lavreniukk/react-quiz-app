@@ -19,9 +19,28 @@ const getQuizById = async (req, res, next) => {
     }
 }
 
-const getQuizzesByUser = async (req, res, next) => {
+const getQuizzesByCreator = async (req, res, next) => {
     try {
-        const quizzes = await quizService.getQuizzesByUserId(req.user._id);
+        const quizzes = await quizService.getQuizzesByCreatorId(req.user._id);
+
+        if (!quizzes) {
+            throw new Error("User's quizzes were not found");
+        }
+
+        res.status(200);
+        res.message = 'Quizzes found successfully';
+        res.data = quizzes;
+    } catch (error) {
+        res.status(404);
+        res.message = error.message;
+    } finally {
+        next();
+    }
+}
+
+const getQuizzesByParticipant = async (req, res, next) => {
+    try {
+        const quizzes = await quizService.getQuizzesByParticipantId(req.user._id);
 
         if (!quizzes) {
             throw new Error("User's quizzes were not found");
@@ -84,7 +103,8 @@ const sendUserAnswers = async (req, res, next) => {
 
 export {
     getQuizById,
-    getQuizzesByUser,
+    getQuizzesByCreator,
+    getQuizzesByParticipant,
     startRandomQuiz,
     sendUserAnswers    
 }
