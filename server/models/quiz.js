@@ -21,6 +21,10 @@ const quizSchema = mongoose.Schema({
         userTime: {
             type: Number,
             default: undefined
+        },
+        userScore: {
+            type: Number,
+            default: undefined
         }
     },
     {
