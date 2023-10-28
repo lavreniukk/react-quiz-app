@@ -13,7 +13,7 @@ const quizSchema = mongoose.Schema({
             required: true,
             ref: 'Question'
         }],
-        user: {
+        createdBy: {
             type: mongoose.Schema.ObjectId,
             required: true,
             ref: 'User'
