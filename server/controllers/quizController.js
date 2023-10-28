@@ -79,13 +79,11 @@ const startRandomQuiz = async (req, res, next) => {
 const sendUserAnswers = async (req, res, next) => {
     try {
         const quizToComplete = await quizService.getQuizById(req.params.id);
-
         if (!quizToComplete) {
             throw new Error("Quiz wasn't found");
         }
 
         const completedQuiz = await quizService.checkUsersAnswers(req.params.id, req.body);
-
         if (!completedQuiz) {
             throw new Error("Quiz wasn't completed");
         }
