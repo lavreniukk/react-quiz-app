@@ -27,7 +27,7 @@ class QuizService {
     }
 
     async createRandomQuiz(userId) {
-        const randomQuestionsIds = await questionRepository.getRandomQuestionsIds(10);
+        const randomQuestionsIds = await questionRepository.getRandomQuestionsIds(3);
 
         const newQuiz = {
             title: 'Random quiz',
@@ -51,7 +51,7 @@ class QuizService {
         const userScore = this.calculateUserScore(questionsFromQuiz, userAnswers);
 
         const participant = {
-            userId,
+            user: userId,
             userScore,
             userTime,
         }
@@ -59,7 +59,7 @@ class QuizService {
         usersQuiz.participants.push(participant);
         await usersQuiz.save();
 
-        usersQuiz.participants = usersQuiz.participants.filter(participant => participant.user === userId);
+        usersQuiz.participants = usersQuiz.participants.filter(participant => participant.user.toString() === userId);
         return usersQuiz;
     }
 

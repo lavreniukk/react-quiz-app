@@ -59,7 +59,7 @@ const getQuizzesByParticipant = async (req, res, next) => {
 
 const startRandomQuiz = async (req, res, next) => {
     try {
-        const quiz = await quizService.createRandomQuiz(req.body._id);
+        const quiz = await quizService.createRandomQuiz(req.user._id);
 
         if (!quiz) {
             throw new Error("Quiz wasn't started, something went wrong");

@@ -4,9 +4,9 @@ import {
     getQuizzesByCreator, 
     getQuizzesByParticipant, 
     sendUserAnswers, 
-    startRandomQuiz } from '../controllers/quizController';
-import { protectMiddleware } from '../middlewares/auth.middleware';
-import responseMiddleware from '../middlewares/response.middleware';
+    startRandomQuiz } from '../controllers/quizController.js';
+import { protectMiddleware } from '../middlewares/auth.middleware.js';
+import responseMiddleware from '../middlewares/response.middleware.js';
 
 const router = Router();
 
